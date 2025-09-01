@@ -12,10 +12,9 @@ def update(i,x):
 
 n = len(a)
 a = [int(i) for i in input().split()]
-N = n
 t = [0]*(n+1)
 for i in range(n): t[i+1] = a[i]
 for i in range(1, n):
 	p = i + (i&-i)
 	if p<=n:
-		tree[p] = tree[p] + tree[i]
+		t[p] = t[p] + t[i]
