@@ -1,12 +1,12 @@
 def update(i, v):
-  i +=n
+  i +=N
   t[i] = v
   while i>1:
     i //=2
     t[i] = max(t[2*i], t[2*i+1])
 
 def query(l, r):
-  l +=n; r +=n
+  l +=N; r +=N
   ans = 0
   while l<r:
     if l&1==1:
