@@ -1,9 +1,9 @@
 def update(i, v):
   i +=n
-  tree[i] = v
+  t[i] = v
   while i>1:
     i //=2
-    tree[i] = max(t[2*i], t[2*i+1])
+    t[i] = max(t[2*i], t[2*i+1])
 
 def query(l, r):
   l +=n; r +=n
