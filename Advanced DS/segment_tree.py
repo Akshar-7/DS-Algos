@@ -3,7 +3,7 @@ def update(i, v):
   tree[i] = v
   while i>1:
     i //=2
-    tree[i] = max(tree[2*i], tree[2*i+1])
+    tree[i] = max(t[2*i], t[2*i+1])
 
 def query(l, r):
   l +=n; r +=n
