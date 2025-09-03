@@ -1,8 +1,7 @@
-N = 10**6+1
-pr = [1]*N
-p = 2
-while p*p<N:
-	if pr[p]:
-		for i in range(2*p, N, p):
-			pr[i]=0
-	p+=1
+N = 10**6
+pr = [1]*(N+1)
+for p in range(2, N+1):
+	if p*p>N: break
+	if pr[p]==0: continue
+	for i in range(p*p, N, p):
+		pr[i]=0
