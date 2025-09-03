@@ -17,11 +17,6 @@ def dfs(x,p):
       if y==x: break
     sccs.append(scc)
 
-n,m = map(int, input().split())
-g = [[] for i in range(n+1)]
-for i in range(m):
-  u,v = map(int, input().split())
-  g[u].append(v)
 t = 0
 sccs = []
 tt = [-1]*(n+1)
