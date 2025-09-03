@@ -10,3 +10,6 @@ def bipartite(sx):
         vis[v]=1; clr[v] = clr[x]^1
         s.append(v)
     return 1
+
+clr = [-1]*(n+1)
+vis = [0]*(n+1)
