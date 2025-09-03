@@ -5,11 +5,11 @@ def bipartite(sx):
       x = s.popleft()
       for v in g[x]:
         if vis[v]:
-          if clr[v]==clr[x]: return 0
+          if clr[v]==clr[x]: return False
           continue
         vis[v]=1; clr[v] = clr[x]^1
         s.append(v)
-    return 1
+    return True
 
 clr = [-1]*(n+1)
 vis = [0]*(n+1)
