@@ -14,7 +14,7 @@ def cmpst(n, a, d, s):
         if (x==n-1): return False
     return True
 
-def M_R(n):
+def mrtest(n):
     if (n<2): return False
     r = 0
     d = n-1
