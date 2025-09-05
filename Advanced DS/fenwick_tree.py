@@ -1,4 +1,4 @@
-	def sum(i):
+	def query(i):
 		res = 0
 		while i>0:
 			res += t[i]
