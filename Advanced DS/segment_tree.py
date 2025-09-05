@@ -21,7 +21,3 @@
   N = 1
   while N<n: N *=2  # N= 2^x & N>= n
   t = [0]*2*N
-  for i in range(n):
-    t[N+i] = a[i]
-  for i in range(N-1, 0, -1):
-    t[i] = max(t[2*i], t[2*i+1])
