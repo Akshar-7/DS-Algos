@@ -17,6 +17,16 @@
         ans = max(ans, t[r])
       l>>=1; r>>=1
     return ans
+
+  def query2(x):
+    i = 1
+    while i<N:
+      if t[2*i]>=x:
+        i = 2*i
+      else:
+        x -=t[2*i]
+        i = 2*i +1
+    return i
   
   N = 1
   while N<n: N *=2  # N= 2^x & N>= n
