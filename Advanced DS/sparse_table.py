@@ -1,12 +1,15 @@
+	def func(x, y):
+		return gcd(x, y)
+
 	def query(l, r):
 		x = dp[r-l+1]
-		return gcd(st[x][l], st[x][r-(1<<x)+1])
+		return func(st[x][l], st[x][r-(1<<x)+1])
 	
 	def query2(l, r):
 	  res = a[l]
 	  for i in range(k-1, -1, -1):
 	    if (r-l+1)< 1<<i: continue
-	    res = gcd(res, st[i][l])
+	    res = func(res, st[i][l])
 	    l += (1<<i)
 	  return res
 	
@@ -20,4 +23,4 @@
 		for j in range(n):
 			if j+(1<<i)>n: break
 			x = 1<<(i-1)
-			st[i][j] = gcd(st[i-1][j], st[i-1][j+x])
+			st[i][j] = func(st[i-1][j], st[i-1][j+x])
