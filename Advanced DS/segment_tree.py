@@ -1,20 +1,23 @@
+  def func(x, y):
+    return max(x, y)
+
   def update(i, v):
     i +=N
     t[i] = v
     while i>1:
       i //=2
-      t[i] = max(t[2*i], t[2*i+1])
+      t[i] = func(t[2*i], t[2*i+1])
   
   def query(l, r):
     l +=N; r +=N
     ans = 0
     while l<r:
       if l&1==1:
-        ans = max(ans, t[l])
+        ans = func(ans, t[l])
         l +=1
       if r&1==1:
         r-=1
-        ans = max(ans, t[r])
+        ans = func(ans, t[r])
       l>>=1; r>>=1
     return ans
 
