@@ -10,9 +10,7 @@ for i in range(2,n):
     if i*x>n: break
     pr[i*x] = 0
     if i%x==0:
-      print(i, i*x, 0)
       phi[i*x] = phi[i]*x
       break
     else:
-      print(i, i*x, 1)
       phi[i*x] = phi[i]*phi[x]
