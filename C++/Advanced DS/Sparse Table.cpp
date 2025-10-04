@@ -1,12 +1,11 @@
 template <typename Node>
-class SparseTable {
+class Sparse {
 public:
- 
 	ll n, LOG;
 	vector<vector<Node>> table;
 	vector<ll> lg;
  
-	SparseTable(vector<ll> &a) {
+	Sparse(vector<ll> &a) {
 		ll sz = a.size();
 		this -> n = sz;
 		this -> LOG = log2(n) + 1;
