@@ -1,17 +1,17 @@
 struct node {
 	ll x = 1e18;  ll idx=0;  ll lazy=0;  };
 
-class SegmentTree {
+class Seg {
 public:
 	ll n;  vector<node> seg;
-
-	SegmentTree(ll n) {
+	Seg(ll n) {
 		this->n = n;  seg.resize(4LL * (n + 1LL));
-  }
+	}
 	// change here
-	node combine(const node &a, const node &b) {
-		if (b.x < a.x) return b;
-		return a;
+	node combine(node &a, node &b) {
+		node res = a;
+		if (b.x < res.x) res=b;
+		return res;
 	}
 	// change here
 	node assign(ll x, ll idx) {
@@ -19,7 +19,7 @@ public:
 		res.x = x;
 		res.idx = idx;
 		return res;
-  }
+	}
 	// change here
 	node no_overlap_return() {
 		node res;  res.x = 1e18;
@@ -27,7 +27,7 @@ public:
 	}
 	// change here
 	void update_logic(ll &idx, ll &tl, ll &tr, ll &val) {
-		seg[idx].lazy -= val;
+		seg[idx].lazy += val;
 	}
 	// change here
 	void propagate(ll &idx, ll &tl, ll &tr) {
