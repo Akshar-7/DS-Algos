@@ -1,54 +1,89 @@
-struct Seg {
-  int n;
-  vector<int> tree, lazy;
-  
-  Seg(const vector<int>& v) : 
-      n(v.size()), tree(4 * n), lazy(4 * n, 0) {
-    build(1, 0, n - 1, v);
-  }
+struct node {
+	ll x = 1e18;  ll idx=0;  ll lazy=0;  };
 
-  int func(int A, int B) { return min(A,B); }
- 
-  void build(int node, int L, int R, const vector<int>& v) {
-    if (L == R) {
-      tree[node] = v[L];
-      return;
-    }
-    int M = (L + R) / 2;
-    build(node * 2, L, M, v);
-    build(node * 2 + 1, M + 1, R, v);
-    tree[node] = func(tree[node * 2], tree[node * 2 + 1]);
+class SegmentTree {
+public:
+	ll n;  vector<node> seg;
+
+	SegmentTree(ll n) {
+		this->n = n;  seg.resize(4LL * (n + 1LL));
   }
-  
-  void add(int node, int l, int r, int i, int val) {
-    if (r < i) return;
-    if (l >= i) {
-      lazy[node] += val;
-      tree[node] += val;
-      return;
-    }
-    int m = (l + r) / 2;
-    add(node * 2, l, m, i, val);
-    add(node * 2 + 1, m + 1, r, i, val);
-    tree[node] = func(tree[node * 2], tree[node * 2 + 1]) + lazy[node];
+	// change here
+	node combine(const node &a, const node &b) {
+		if (b.x < a.x) return b;
+		return a;
+	}
+	// change here
+	node assign(ll x, ll idx) {
+		node res;
+		res.x = x;
+		res.idx = idx;
+		return res;
   }
- 
-  int pop(int node, int l, int r, int val) {
-    if (l == r) {
-      tree[node] = 2e18;
-      return b;
-    }
-    int m = (l + r) / 2;
-    val -= lazy[node];
- 
-    int ret = -1;
-    if (tree[node * 2 + 1] == val)
-      ret = pop(node * 2 + 1, m + 1, r, val);
-    else ret = pop(node * 2, l, m, val);
-    tree[node] = func(tree[node * 2], tree[node * 2 + 1]) + lazy[node];
-    return ret;
-  }
- 
-  void Add(int l, int val) { add(1, 0, n - 1, l, val); }
-  int Pop() { return pop(1, 0, n - 1, 0); }
+	// change here
+	node no_overlap_return() {
+		node res;  res.x = 1e18;
+		return res;
+	}
+	// change here
+	void update_logic(ll &idx, ll &tl, ll &tr, ll &val) {
+		seg[idx].lazy -= val;
+	}
+	// change here
+	void propagate(ll &idx, ll &tl, ll &tr) {
+		if (seg[idx].lazy != 0) {
+			seg[idx].x += seg[idx].lazy;
+			if (tl != tr) {
+				seg[2 * idx + 1].lazy += seg[idx].lazy;
+				seg[2 * idx + 2].lazy += seg[idx].lazy;
+			}
+			seg[idx].lazy = 0;
+		}
+	}
+
+	void build_seg(ll idx, ll tl, ll tr, vector<ll> &a) {
+		if (tl == tr) {
+			seg[idx] = assign(a[tl], tl);
+			return;
+		}
+		ll mid = tl + ((tr - tl) >> 1LL);
+		build_seg(2LL * idx + 1LL, tl, mid, a);
+		build_seg(2LL * idx + 2LL, mid + 1, tr, a);
+		seg[idx] = combine(seg[2LL * idx + 1LL], seg[2LL * idx + 2LL]);
+	}
+
+	node query_seg(ll idx, ll tl, ll tr, ll &l, ll &r) {
+		propagate(idx, tl, tr);
+		if (tl >= l and tr <= r) return seg[idx];
+		if (tr < l or tl > r) return no_overlap_return();
+		ll mid = tl + ((tr - tl) >> 1LL);
+		node left = query_seg(2LL * idx + 1LL, tl, mid, l, r);
+		node right = query_seg(2LL * idx + 2LL, mid + 1LL, tr, l, r);
+		return combine(left, right);
+	}
+	void update_seg(ll idx, ll tl, ll tr, ll &l, ll &r, ll &x) {
+		propagate(idx, tl, tr);
+		if (tl > r or tr < l) return;
+		if (tl >= l and tr <= r) {
+			update_logic(idx, tl, tr, x);
+			propagate(idx, tl, tr);
+			return;
+		}
+		ll mid = tl + ((tr - tl) >> 1LL);
+		update_seg(2LL * idx + 1LL, tl, mid, l, r, x);
+		update_seg(2LL * idx + 2LL, mid + 1LL, tr, l, r, x);
+		seg[idx] = combine(seg[2LL * idx + 1LL], seg[2LL * idx + 2LL]);
+	}
+
+	void build(vector<ll> &a) {
+		build_seg(0, 0, n - 1, a);
+	}
+
+	node query(ll l, ll r) {
+		return query_seg(0, 0, n - 1, l, r);
+	}
+
+	void update(ll l, ll r, ll val) {
+		update_seg(0, 0, n - 1, l, r, val);
+	}
 };
