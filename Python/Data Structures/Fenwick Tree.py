@@ -10,8 +10,6 @@
 			t[i] += x
 			i += (i&-i)
 	
-	n = len(a)
-	a = [int(i) for i in input().split()]
 	t = [0]*(n+1)
 	for i in range(n): t[i+1] = a[i]
 	for i in range(1, n):
