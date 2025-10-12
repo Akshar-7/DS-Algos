@@ -1,5 +1,23 @@
+# TODO : Add Lazy Propagation
   def func(x, y):
     return max(x, y)
+
+  def update_rng(l, r, v):
+    l +=N; r +=N
+    while l<r:
+      if l&1==1:
+        t[l] = func(v, t[l])
+        l +=1
+      if r&1==1:
+        r-=1
+        t[r] = func(v, t[r])
+      l>>=1; r>>=1
+
+  def push():
+    for i in range(1, n):
+      t[i<<1] = func(t[i<<1], t[i])
+      t[i<<1|1] = func(t[i<<1|1], t[i])
+      t[i] = 10**18
 
   def update(i, v):
     i +=N
@@ -8,7 +26,7 @@
       i //=2
       t[i] = func(t[2*i], t[2*i+1])
   
-  def query(l, r):
+  def query_rng(l, r):
     l +=N; r +=N
     ans = 0
     while l<r:
