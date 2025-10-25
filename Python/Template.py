@@ -8,7 +8,7 @@ def main():
   #c = [int(i) for i in input().split()]
   #c = [list(i) for i in input().split()]
   #b = [int(i) for i in input().split()]
-  #s = input()
+  #s = input().strip()
   
 
 t = int(input())
