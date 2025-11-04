@@ -15,3 +15,6 @@ fr = [1]*N
 fr[N-1] = pw(f[N-1], m-2, m)
 for i in range(N-2, 1, -1):
 	fr[i] = fr[i+1]*(i+1) %m
+
+def comb(n, r):
+	return f[n] *fr[r] *fr[n-r] %m
