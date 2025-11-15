@@ -2,17 +2,24 @@
 #2 Under Construction
 class Node():
   __slots__ = ['x', 'i', 'lazy']
-  x = 0; i = 0; lazy = 0
+  def __init__(self):
+    self.x = 10**9+1; self.i = 0; self.lazy = 0
+  def __repr__(self):
+    return f"Node(x:{self.x}, i:{self.i}, lazy:{self.lazy})"
+
+def copy(a):
+  res = assign(a.x, a.i)
+  return res
 
 def func(a, b):
-  res = a
-  if a.x < b.x: res = b
+  res = copy(a)
+  if a.x > b.x: res = copy(b)
   return res
 
 def assign(x, idx):
   res = Node()
   res.x = x
-  res.idx = idx
+  res.i = idx
   return res
 
 def build(a):
@@ -26,8 +33,8 @@ def build(a):
   for i in range(N-1, 0, -1):
     t[i] = func(t[i<<1], t[i<<1 |1])
   return t
-
-def update_rng(l, r, v):
+# Need some work here
+def update_rng(t, l, r, v):
   l +=N; r +=N
   while l<r:
     if l&1==1:
@@ -38,20 +45,20 @@ def update_rng(l, r, v):
       t[r] = func(v, t[r])
     l>>=1; r>>=1
 
-def push():
+def push(t):
   for i in range(1, n):
     t[i<<1] = func(t[i<<1], t[i])
     t[i<<1|1] = func(t[i<<1|1], t[i])
-    t[i] = 10**18
+    t[i] = assign(10**9+1, 0)
 
-def update(i, v):
+def update(t, i, v):
   i +=N
-  t[i] = v
+  t[i] = assign(v, i-N)
   while i>1:
     i //=2
     t[i] = func(t[i<<1], t[i<<1 |1])
 
-def query_rng(l, r):
+def query_rng(t, l, r):
   l +=N; r +=N
   ans = Node()
   while l<r:
