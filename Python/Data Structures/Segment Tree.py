@@ -1,13 +1,14 @@
 # TODO : Add Lazy Propagation
+  default = 0
   def func(x, y):
-    return max(x, y)
+    return max((x, y))
 
   def build(a):
     global N
     n = len(a)
     N = 1
     while N<n: N *=2  # N= 2^x & N>= n
-    t = [0]*2*N
+    t = [default]*(2*N)
     for i in range(n):
       t[N+i] = a[i]
     for i in range(N-1, 0, -1):
@@ -40,7 +41,7 @@
   
   def query_rng(l, r):
     l +=N; r +=N
-    ans = 0
+    ans = default
     while l<r:
       if l&1==1:
         ans = func(ans, t[l])
