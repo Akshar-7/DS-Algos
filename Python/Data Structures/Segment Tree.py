@@ -2,6 +2,18 @@
   def func(x, y):
     return max(x, y)
 
+  def build(a):
+    global N
+    n = len(a)
+    N = 1
+    while N<n: N *=2  # N= 2^x & N>= n
+    t = [0]*2*N
+    for i in range(n):
+      t[N+i] = a[i]
+    for i in range(N-1, 0, -1):
+      t[i] = func(t[i<<1], t[i<<1 |1])
+    return t
+
   def update_rng(l, r, v):
     l +=N; r +=N
     while l<r:
@@ -48,7 +60,3 @@
         x -=t[2*i]
         i = 2*i +1
     return i
-  
-  N = 1
-  while N<n: N *=2  # N= 2^x & N>= n
-  t = [0]*2*N
