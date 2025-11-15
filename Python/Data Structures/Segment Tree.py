@@ -71,11 +71,12 @@ def query_rng(t, l, r):
     l>>=1; r>>=1
   return ans
 
-def query_pnt(x):
+def query_pnt(k):
   i = 1
   while i<N:
-    if t[i<<1].x >= x:
+    if t[i<<1].x >= k:
       i = 1<<i
     else:
+      k -= t[1<<i].x
       i = i<<1 |1
   return i-N
