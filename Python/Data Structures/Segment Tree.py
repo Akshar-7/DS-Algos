@@ -70,13 +70,12 @@ def query_rng(t, l, r):
       ans = func(ans, t[r])
     l>>=1; r>>=1
   return ans
-# This is not updated yet
-def query2(x):
+
+def query_pnt(x):
   i = 1
   while i<N:
-    if t[2*i]>=x:
-      i = 2*i
+    if t[i<<1].x >= x:
+      i = 1<<i
     else:
-      x -=t[2*i]
-      i = 2*i +1
-  return i
+      i = i<<1 |1
+  return i-N
