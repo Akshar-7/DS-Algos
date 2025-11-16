@@ -71,12 +71,18 @@ def query_rng(t, l, r):
     l>>=1; r>>=1
   return ans
 
-def query_pnt(t, k):
-  i = 1
-  while i<N:
-    if t[i<<1].x >= k:
-      i = i<<1
-    else:
-      k -= t[1<<i].x
-      i = i<<1 |1
-  return i-N
+def query_idx(t, l, r, k):
+  L, R = 0, N-1
+  s = [(1, L, R)]
+  while s:
+    i,L,R = s.pop()
+    if t[i].x < k: continue
+    if R<l or L>r: continue
+    if L==R:
+      return L
+    mid = (L+R)//2
+    if not(R<l or mid+1>r) and t[i<<1|1].x >= k:
+      s.append((i<<1|1, mid+1, R))
+    if not(mid<l or L>r) and t[i<<1].x >= k:
+      s.append((i<<1, L, mid))
+  return -1
