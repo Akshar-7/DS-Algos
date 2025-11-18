@@ -33,7 +33,7 @@ def build(a):
   for i in range(N-1, 0, -1):
     t[i] = func(t[i<<1], t[i<<1 |1])
   return t
-# Need some work here
+# Need some work here # [l, r]
 def update_rng(t, l, r, v):
   l +=N; r +=N
   while l<r:
@@ -57,7 +57,7 @@ def update(t, i, v):
   while i>1:
     i //=2
     t[i] = func(t[i<<1], t[i<<1 |1])
-
+# [l, r)
 def query_rng(t, l, r):
   l +=N; r +=N
   ans = Node()
@@ -70,7 +70,7 @@ def query_rng(t, l, r):
       ans = func(ans, t[r])
     l>>=1; r>>=1
   return ans
-
+# [l, r]
 def query_idx(t, l, r, k):
   L, R = 0, N-1
   s = [(1, L, R)]
