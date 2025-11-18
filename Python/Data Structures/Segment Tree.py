@@ -16,11 +16,15 @@ def func(a, b):
   if a.x > b.x: res = copy(b)
   return res
 
-def assign(x, idx):
+def assign(x, i):
   res = Node()
   res.x = x
-  res.i = idx
+  res.i = i
   return res
+# NOT TESTED
+def apply(i, val):
+  t[i].x += val
+  if i<N: t[i].lazy += val
 
 def build(a):
   global N
@@ -38,18 +42,18 @@ def update_rng(t, l, r, v):
   l +=N; r +=N
   while l<r:
     if l&1==1:
-      t[l] = func(v, t[l])
+      t[l] = func(t[l], v)
       l +=1
     if r&1==1:
       r-=1
-      t[r] = func(v, t[r])
+      t[r] = func(t[r], v)
     l>>=1; r>>=1
-
-def push(t):
-  for i in range(1, n):
-    t[i<<1] = func(t[i<<1], t[i])
-    t[i<<1|1] = func(t[i<<1|1], t[i])
-    t[i] = assign(10**9+1, 0)
+# NOT TESTED
+def propagate(t, i):
+  if t[i].lazy != 0 and i < N:
+      t[i<<1].lazy += t[i].lazy
+      t[i<<1 |1].lazy += t[i].lazy
+			t[i].lazy = 0
 
 def update(t, i, v):
   i +=N
@@ -60,16 +64,18 @@ def update(t, i, v):
 # [l, r)
 def query_rng(t, l, r):
   l +=N; r +=N
-  ans = Node()
+  ansL = Node(); ansR = Node()
   while l<r:
     if l&1==1:
-      ans = func(ans, t[l])
+      propagate(t, l)  # NEW
+      ansL = func(ansL, t[l])
       l +=1
     if r&1==1:
       r-=1
-      ans = func(ans, t[r])
+      propagate(t, r)  # NEW
+      ansR = func(t[r], ansR)
     l>>=1; r>>=1
-  return ans
+  return func(ansL, ansR)
 # [l, r]
 def query_idx(t, l, r, k):
   L, R = 0, N-1
