@@ -1,5 +1,6 @@
 #1 TODO : Add Lazy Propagation
 #2 Under Construction
+#3 The Added Lazy methods are wrong for iterative. Fix that
 class Node():
   __slots__ = ['x', 'i', 'lazy']
   def __init__(self):
