@@ -22,7 +22,7 @@ def assign(x, i):
   res.i = i
   return res
 
-def apply(i, val):
+def apply(i, val, sz):
   t[i].x += val
   if i<N: t[i].lazy += val
 
