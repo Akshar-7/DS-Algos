@@ -37,9 +37,24 @@ def build(a):
   for i in range(N-1, 0, -1):
     t[i] = merge(t[i<<1], t[i<<1 |1])
   return t
+
+def push(t, p):
+  for s in range(h, 0, -1):
+    i = p >> s
+    if t[i].lazy != 0:
+      apply(i<<1, t[i].lazy)
+      apply(i<<1|1, t[i].lazy)
+      t[i].lazy = 0
+
+def propagate(t, p):
+  while p>1:
+    p>>=1
+    t[p].x = merge(t[p<<1], t[p<<1 |1]).x +t[p].lazy
+
 # [l, r)
 def update_rng(t, l, r, v):
   l +=N; r +=N
+  l0,r0 = l,r
   push(t, l); push(t, r-1)  # NEW
   while l<r:
     if l&1==1:
@@ -49,14 +64,8 @@ def update_rng(t, l, r, v):
       r-=1
       apply(r, v)
     l>>=1; r>>=1
-
-def push(t, p):
-  for s in range(H, 0, -1):
-    i = p >> s
-    if t[i].lazy != 0:
-      apply(i<<1, t[i].lazy)
-      apply(i<<1|1, t[i].lazy)
-      t[i].lazy = 0
+  propagate(t, l0)
+  propagate(t, r0-1)
 
 def update(t, i, v):
   i +=N
