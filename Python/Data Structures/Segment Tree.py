@@ -45,28 +45,33 @@ def push(t, p):
   for s in range(h, 0, -1):
     i = p >> s
     if t[i].lazy != def_lazy:
-      apply(i<<1, t[i].lazy)
-      apply(i<<1|1, t[i].lazy)
+      csz = 1<<(s-1)
+      apply(i<<1, t[i].lazy, csz)
+      apply(i<<1|1, t[i].lazy, csz)
       t[i].lazy = def_lazy
 
 def propagate(t, p):
+  sz = 1
   while p>1:
     p>>=1
-    t[p].x = merge(t[p<<1], t[p<<1 |1]).x
-    if t[p].lazy != def_lazy:
-      t[p].x += t[p].lazy
+    sz <<=1; val = t[p].lazy
+    t[p] = merge(t[p<<1], t[p<<1 |1])
+    if val != def_lazy:
+      apply(p, val, sz)
 # [l, r)
 def update_rng(t, l, r, v):
   l +=N; r +=N
   l0,r0 = l,r
-  push(t, l); push(t, r-1)  # NEW
+  push(t, l); push(t, r-1)
+  sz = 1
   while l<r:
     if l&1==1:
-      apply(l, v)
+      apply(l, v, sz)
       l +=1
     if r&1==1:
       r-=1
-      apply(r, v)
+      apply(r, v, sz)
+    sz <<=1
     l>>=1; r>>=1
   propagate(t, l0)
   propagate(t, r0-1)
@@ -75,7 +80,7 @@ def update(t, i, v):
   i +=N
   t[i] = assign(v, i-N)
   while i>1:
-    i //=2
+    i >>=1
     t[i] = merge(t[i<<1], t[i<<1 |1])
 # [l, r)
 def query_rng(t, l, r):
@@ -97,10 +102,13 @@ def query_idx(t, l, r, k):
   s = [(1, L, R)]
   while s:
     i,L,R = s.pop()
+    if t[i].lazy != def_lazy:
+      apply(i<<1, t[i].lazy, (R-L+1)>>1)
+      apply(i<<1|1, t[i].lazy, (R-L+1)>>1)
+      t[i].lazy = def_lazy
     if t[i].x < k: continue
     if R<l or L>r: continue
-    if L==R:
-      return L
+    if L==R:  return L
     mid = (L+R)//2
     if not(R<l or mid+1>r) and t[i<<1|1].x >= k:
       s.append((i<<1|1, mid+1, R))
