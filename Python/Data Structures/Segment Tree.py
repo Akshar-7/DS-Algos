@@ -31,7 +31,7 @@ def build(a):
   N = 1; H = 0
   while N<n:  # N= 2^x & N>= n
     N *=2; H +=1
-  t = [Node()]*(2*N)
+  t = [Node() for _ in range(2*N)]
   for i in range(n):
     t[N+i] = assign(a[i], i)
   for i in range(N-1, 0, -1):
@@ -40,6 +40,7 @@ def build(a):
 # [l, r)
 def update_rng(t, l, r, v):
   l +=N; r +=N
+  push(t, l); push(t, r-1)  # NEW
   while l<r:
     if l&1==1:
       apply(l, v)
