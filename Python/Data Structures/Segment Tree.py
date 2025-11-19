@@ -1,8 +1,9 @@
 # Under Testing
+def_lazy = 0
 class Node():
   __slots__ = ['x', 'i', 'lazy']
   def __init__(self):
-    self.x = 10**9+1; self.i = 0; self.lazy = 0
+    self.x = 10**9+1; self.i = 0; self.lazy = def_lazy
   def __repr__(self):
     return f"Node(x:{self.x}, i:{self.i}, lazy:{self.lazy})"
 
@@ -26,31 +27,34 @@ def apply(i, val):
   if i<N: t[i].lazy += val
 
 def build(a):
-  global N, H
+  global N, H, sz
   n = len(a)
   N = 1; H = 0
   while N<n:  # N= 2^x & N>= n
     N *=2; H +=1
   t = [Node() for _ in range(2*N)]
+  sz = [1]*(2*N)
   for i in range(n):
     t[N+i] = assign(a[i], i)
   for i in range(N-1, 0, -1):
     t[i] = merge(t[i<<1], t[i<<1 |1])
+    sz[i] = sz[i<<1] <<1
   return t
 
 def push(t, p):
   for s in range(h, 0, -1):
     i = p >> s
-    if t[i].lazy != 0:
+    if t[i].lazy != def_lazy:
       apply(i<<1, t[i].lazy)
       apply(i<<1|1, t[i].lazy)
-      t[i].lazy = 0
+      t[i].lazy = def_lazy
 
 def propagate(t, p):
   while p>1:
     p>>=1
-    t[p].x = merge(t[p<<1], t[p<<1 |1]).x +t[p].lazy
-
+    t[p].x = merge(t[p<<1], t[p<<1 |1]).x
+    if t[p].lazy != def_lazy:
+      t[p].x += t[p].lazy
 # [l, r)
 def update_rng(t, l, r, v):
   l +=N; r +=N
