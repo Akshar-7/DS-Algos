@@ -26,10 +26,11 @@ def apply(i, val):
   if i<N: t[i].lazy += val
 
 def build(a):
-  global N
+  global N, H
   n = len(a)
-  N = 1
-  while N<n: N *=2  # N= 2^x & N>= n
+  N = 1; H = 0
+  while N<n:  # N= 2^x & N>= n
+    N *=2; H +=1
   t = [Node()]*(2*N)
   for i in range(n):
     t[N+i] = assign(a[i], i)
@@ -49,7 +50,7 @@ def update_rng(t, l, r, v):
     l>>=1; r>>=1
 
 def push(t, p):
-  for s in range(h, 0, -1):
+  for s in range(H, 0, -1):
     i = p >> s
     if t[i].lazy != 0:
       apply(i<<1, t[i].lazy)
