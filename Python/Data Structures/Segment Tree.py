@@ -27,18 +27,16 @@ def apply(i, val, sz):
   if i<N: t[i].lazy += val
 
 def build(a):
-  global N, H, sz
+  global N, H
   n = len(a)
   N = 1; H = 0
   while N<n:  # N= 2^x & N>= n
     N *=2; H +=1
   t = [Node() for _ in range(2*N)]
-  sz = [1]*(2*N)
   for i in range(n):
     t[N+i] = assign(a[i], i)
   for i in range(N-1, 0, -1):
     t[i] = merge(t[i<<1], t[i<<1 |1])
-    sz[i] = sz[i<<1] <<1
   return t
 
 def push(t, p):
