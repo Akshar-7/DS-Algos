@@ -1,5 +1,5 @@
 struct node {
-	ll x = 1e18;  ll idx=0;  ll lazy=0;  };
+	ll x = 1e18;  ll idx=-1;  ll lazy=0;  };
 
 class Seg {
 public:
@@ -22,7 +22,7 @@ public:
 	}
 	// change here
 	node no_overlap_return() {
-		node res;  res.x = 1e18;
+		node res;
 		return res;
 	}
 	// change here
@@ -51,7 +51,7 @@ public:
 		build_seg(2LL * idx + 2LL, mid + 1, tr, a);
 		seg[idx] = combine(seg[2LL * idx + 1LL], seg[2LL * idx + 2LL]);
 	}
-
+	// [l, r]
 	node query_seg(ll idx, ll tl, ll tr, ll &l, ll &r) {
 		propagate(idx, tl, tr);
 		if (tl >= l and tr <= r) return seg[idx];
