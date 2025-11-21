@@ -1,5 +1,8 @@
+using ll = long long;
+const ll LAZY_DEF = 0;
+
 struct node {
-	ll x = 1e18;  ll idx=-1;  ll lazy=0;  };
+	ll x = 1e18;  ll idx=-1;  ll lazy=LAZY_DEF;  };
 
 class Seg {
 public:
@@ -10,7 +13,7 @@ public:
 	// change here
 	node combine(node &a, node &b) {
 		node res = a;
-		if (b.x < res.x) res=b;
+		if (b.x < res.x) res = b;
 		return res;
 	}
 	// change here
@@ -21,23 +24,25 @@ public:
 		return res;
 	}
 	// change here
+	void update_logic(ll idx, ll tl, ll tr, ll val) {
+		seg[idx].x += val;
+		seg[idx].lazy += val;
+	}
+
 	node no_overlap_return() {
 		node res;
 		return res;
 	}
-	// change here
-	void update_logic(ll &idx, ll &tl, ll &tr, ll &val) {
-		seg[idx].lazy += val;
-	}
-	// change here
+
 	void propagate(ll &idx, ll &tl, ll &tr) {
-		if (seg[idx].lazy != 0) {
+		if (seg[idx].lazy != LAZY_DEF) {
 			seg[idx].x += seg[idx].lazy;
 			if (tl != tr) {
-				seg[2 * idx + 1].lazy += seg[idx].lazy;
-				seg[2 * idx + 2].lazy += seg[idx].lazy;
+				ll mid = tl + ((tr - tl) >> 1LL);
+                update_logic(2 * idx + 1, tl, mid, seg[idx].lazy);
+                update_logic(2 * idx + 2, mid + 1, tr, seg[idx].lazy);
 			}
-			seg[idx].lazy = 0;
+			seg[idx].lazy = LAZY_DEF;
 		}
 	}
 
@@ -66,7 +71,6 @@ public:
 		if (tl > r or tr < l) return;
 		if (tl >= l and tr <= r) {
 			update_logic(idx, tl, tr, x);
-			propagate(idx, tl, tr);
 			return;
 		}
 		ll mid = tl + ((tr - tl) >> 1LL);
