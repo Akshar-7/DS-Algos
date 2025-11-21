@@ -12,8 +12,8 @@ public:
 	}
 	// change here
 	node combine(node &a, node &b) {
-		node res = a;
-		if (b.x < res.x) res = b;
+		node res;
+		res.x = min(a.x, b.x);
 		return res;
 	}
 	// change here
