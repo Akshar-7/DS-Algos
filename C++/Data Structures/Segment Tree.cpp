@@ -28,24 +28,18 @@ public:
 		seg[idx].x += val;
 		seg[idx].lazy += val;
 	}
-
 	node no_overlap_return() {
 		node res;
 		return res;
 	}
-
 	void propagate(ll &idx, ll &tl, ll &tr) {
-		if (seg[idx].lazy != LAZY_DEF) {
-			seg[idx].x += seg[idx].lazy;
-			if (tl != tr) {
-				ll mid = tl + ((tr - tl) >> 1LL);
-                update_logic(2 * idx + 1, tl, mid, seg[idx].lazy);
-                update_logic(2 * idx + 2, mid + 1, tr, seg[idx].lazy);
-			}
+		if (seg[idx].lazy != LAZY_DEF and tl != tr) {
+			ll mid = tl + ((tr - tl) >> 1LL);
+			update_logic(2 * idx + 1, tl, mid, seg[idx].lazy);
+			update_logic(2 * idx + 2, mid + 1, tr, seg[idx].lazy);
 			seg[idx].lazy = LAZY_DEF;
 		}
 	}
-
 	void build_seg(ll idx, ll tl, ll tr, vector<ll> &a) {
 		if (tl == tr) {
 			seg[idx] = assign(a[tl], tl);
@@ -56,7 +50,6 @@ public:
 		build_seg(2LL * idx + 2LL, mid + 1, tr, a);
 		seg[idx] = combine(seg[2LL * idx + 1LL], seg[2LL * idx + 2LL]);
 	}
-	// [l, r]
 	node query_seg(ll idx, ll tl, ll tr, ll &l, ll &r) {
 		propagate(idx, tl, tr);
 		if (tl >= l and tr <= r) return seg[idx];
@@ -78,16 +71,25 @@ public:
 		update_seg(2LL * idx + 2LL, mid + 1LL, tr, l, r, x);
 		seg[idx] = combine(seg[2LL * idx + 1LL], seg[2LL * idx + 2LL]);
 	}
+	ll find_kth_seg(ll idx, ll tl, ll tr, ll k) {
+        if (tl == tr) return tl;
+        propagate(idx, tl, tr);
+        ll mid = tl + ((tr - tl) >> 1LL);
+        if (seg[2*idx +1].x >= k) return find_kth_seg(2*idx +1, tl, mid, k);
+        return find_kth_seg(2*idx +2, mid+1, tr, k -seg[2*idx +1].x);
+    }
 
 	void build(vector<ll> &a) {
 		build_seg(0, 0, n - 1, a);
 	}
-
 	node query(ll l, ll r) {
 		return query_seg(0, 0, n - 1, l, r);
 	}
-
 	void update(ll l, ll r, ll val) {
 		update_seg(0, 0, n - 1, l, r, val);
 	}
+	int find_kth(ll k) {
+        if (seg[0].x < k) return -1; 
+        return find_kth_seg(0, 0, n - 1, k);
+    }
 };
