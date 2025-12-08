@@ -11,7 +11,7 @@ public:
     vector<node> seg;
     DynamicSeg(int n) {
         this->n = n;
-        seg.reserve(5000000); // Pre-allocate memory
+        seg.reserve(5000000); // Pre-allocate memory ~ Q * logN
         create_node(); // Dummy root at i=0
     }
     int create_node() {
@@ -55,7 +55,6 @@ public:
 
     void update_seg(int idx, int tl, int tr, int &l, int &r, int &val) {
         if (tl > r or tr < l) return;
-        
         if (tl >= l and tr <= r) {
             update_logic(idx, tl, tr, val);
             return;
@@ -101,12 +100,12 @@ public:
         return combine(left, right);
     }
     int find_seg(int idx, int tl, int tr, int h, int ch) {
-        if (ch + seg[idx].mxp <= h)  return (tr - tl + 1);
+        if (ch + seg[idx].sum <= h)  return (tr - tl + 1);
         if (tl == tr) return 0;
         propagate(idx, tl, tr);
         extend(idx);
         ll mid = tl + ((tr - tl) >> 1LL);
-        if (ch + seg[seg[idx].l].mxp > h)  return find_seg(seg[idx].l, tl, mid, h, ch);
+        if (ch + seg[seg[idx].l].sum > h)  return find_seg(seg[idx].l, tl, mid, h, ch);
         return (mid - tl + 1) + find_seg(seg[idx].r, mid+1, tr, h, ch +seg[seg[idx].l].sum);
     }
 
