@@ -1,5 +1,3 @@
-from sys import setrecursionlimit as sr
-sr(2*10**5+2)
 from types import GeneratorType
 def bootstrap(f, stack=[]):
   def wrappedfunc(*args, **kwargs):
@@ -16,5 +14,4 @@ def bootstrap(f, stack=[]):
           to = stack[-1].send(to)
       return to
   return wrappedfunc
-
 # Add the "@bootstrap" decorator above the function definition
