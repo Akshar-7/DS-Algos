@@ -10,10 +10,11 @@ def lca(u,v):
   v = find(v, d)
   if u==v: return u
   for m in range(k-1,-1,-1):
-    pu, pv = find(u,m), find(v,m)
+    pu, pv = p[u][m], p[v][m]
     if pu!=pv:
       u,v = pu,pv
   return p[u][0]
+
 k = 0
 while (1<<k)<=n: k+=1
 p = [[0]*k for i in range(n+1)]
