@@ -1,15 +1,15 @@
 lg = 32
-def insert(x):
+def insert(x, j):
   for i in range(lg-1, -1, -1):
     if x&1<<i==0: continue
-    if bs[i]==0:
-      bs[i] = x
+    if b[i]==0:
+      b[i] = x; d[i] = j
       break
-    x ^= bs[i]
+    x ^= b[i]
 
 def query(x):
   for i in range(lg-1, -1, -1):
     if x&1<<i==0: continue
-    x ^= bs[i]
+    x ^= b[i]
   return x==0
 
