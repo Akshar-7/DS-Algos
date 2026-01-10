@@ -2,7 +2,7 @@
 # Basis does not depend on insertion order
 # Maintains minimum basis
 # Check equality of basis
-# Simple k-th queries
+# Simple k-th queries (in O(1) using Four Russian)
 # Not good for merging / modification
 
 sz = 0
