@@ -7,6 +7,7 @@
 
 sz = 0
 def insert(x):
+  global sz
   for y in b:
     x = min(x, x^y)
   for i in range(sz):
