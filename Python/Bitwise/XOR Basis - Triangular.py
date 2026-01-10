@@ -18,3 +18,14 @@ def query(x):
     #mask ^= m[i]
   return x==0
 
+def lexk(k):
+  res = 0
+  ttl = 1<<len(b)
+  for i in range(lg-1, -1, -1):
+    if b[i]==0: continue
+    ttl >>=1
+    bit = res&1<<i
+    if (k<=ttl and bit) or (k>ttl and not bit):
+      res ^= b[i]
+    if k>ttl: k -=ttl
+  return res
