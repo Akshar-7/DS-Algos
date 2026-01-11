@@ -6,9 +6,10 @@ def insert(x, j):
     if b[i]==0:
       b[i] = x; d[i] = j
       #m[i] = mask^(1<<i)
-      break
+      return 1
     #mask ^= m[i]
     x ^= b[i]
+  return 0
 
 def query(x):
   #mask = 0
