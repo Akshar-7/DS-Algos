@@ -15,9 +15,15 @@ def query(x):
   #mask = 0
   for i in range(lg-1, -1, -1):
     if x&1<<i==0: continue
-    x ^= b[i]
-    #mask ^= m[i]
+    x ^= b[i]; #mask ^= m[i]
   return x==0
+
+def maxxor(x):
+  #mask = 0
+  for i in range(lg - 1, -1, -1):
+    if x < x^b[i]:
+      x ^= b[i]; #mask ^= m[i]
+  return x
 
 def lexk(k):
   res = 0
