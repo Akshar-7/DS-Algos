@@ -12,12 +12,17 @@ def insert(x):
     x = min(x, x^y)
   for i in range(sz):
     b[i] = min(b[i], b[i]^x)
-  if x==0: return False
+  if x==0: return 0
   b.append(x); sz+=1
   for i in range(sz-1,0,-1):
     if b[i]<b[i-1]:
       b[i],b[i-1] = b[i-1],b[i]
-  return True
+  return 1
+
+def query(x):
+  for y in b:
+    x = min(x, x^y)
+  return x==0
 
 def lexk(k):
   k-=1  # k starts from 1
