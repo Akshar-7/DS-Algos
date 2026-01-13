@@ -26,8 +26,11 @@ def maxxor(x):
   return x
 
 def lexk(k):
-  res = 0
-  ttl = 1<<len(b)
+  res = sz = 0
+  for x in b:
+    if x!=0: sz +=1
+  ttl = 1<<sz
+  if k>ttl: return -1
   for i in range(lg-1, -1, -1):
     if b[i]==0: continue
     ttl >>=1
