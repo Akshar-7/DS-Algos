@@ -1,5 +1,5 @@
 lg = 32
-def insert(x, j):
+def insert(x, j = -1):
   #mask = 0
   for i in range(lg-1, -1, -1):
     if x&1<<i==0: continue
