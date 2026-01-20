@@ -1,7 +1,8 @@
 lg = 32
 def insert(x, j = -1):
   #mask = 0
-  for i in range(lg-1, -1, -1):
+  while x>0:
+    i = x.bit_length() -1
     if x&1<<i==0: continue
     if b[i]==0:
       b[i] = x; d[i] = j
