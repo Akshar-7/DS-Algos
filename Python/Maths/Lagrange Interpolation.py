@@ -1,3 +1,4 @@
+# Problem: https://codeforces.com/contest/622/problem/F
 mod = 10**9 +7
 def init(k):
   y = [0]  # Initializing with y(0)
@@ -10,19 +11,27 @@ def init(k):
   return y
 
 def get(n, k, y):
+  # Degree of poly = k+1
   szy = len(y) # Degree of poly + 1
   if n <= k+1: return y[n]
-  ans = 0
-  cur = 1  # Creating G(0)
-  for i in range(1, szy):
-    cur = (cur *(n-i)) %mod
-    cur = (cur *pw(-i, mod-2, mod)) %mod
-  # Calc 'ans' & Transition from G(i) to G(i+1)
+  # Calc Factorials and its Inverses upto Degree of Poly
+  pre = [1] *szy
+  suf = [1] *szy
+  curr = 1
   for i in range(szy):
-    ans = (ans + cur*y[i]) %mod
-    if i == k+1: break
-    cur = (cur *(n-i)) %mod
-    cur = (cur *pw(n -(i+1), mod-2, mod)) %mod
-    cur = (cur *(i -(k+1))) %mod
-    cur = (cur *pw(i+1, mod-2, mod)) %mod
-  return (ans +mod) %mod
+    curr = (curr *(n-i)) %mod
+    pre[i] = curr
+  curr = 1
+  for i in range(szy-1, -1, -1):
+    curr = (curr *(n-i)) %mod
+    suf[i] = curr
+  ans = 0
+  for i in range(1, szy):
+    num = pre[i-1]
+    if i < k+1:
+      num = (num *suf[i+1]) %mod
+    den = (fr[i] *fr[k+1-i]) %mod
+    sign = -1 if ((k+1 -i) % 2) else 1
+    term = y[i] *num *den %mod
+    ans = (ans + sign*term) %mod
+  return ans
