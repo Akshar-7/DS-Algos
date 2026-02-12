@@ -12,7 +12,7 @@ $$
 \left( \sum_{i=1}^{n} a_i^2 \right) \left( \sum_{i=1}^{n} b_i^2 \right) \ge \left( \sum_{i=1}^{n} a_i b_i \right)^2
 $$
 
-Equality holds if and only if $a_i = k \times b_i$​ for a non-zero constant $k∈R$. It can be generalized to Hölder's inequality.
+Equality holds if and only if $a_i = k \cdot b_i$​ for a non-zero constant $k∈R$. It can be generalized to Hölder's inequality.
 
 ### Hölder's Inequality
 
