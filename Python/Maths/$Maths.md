@@ -1,3 +1,9 @@
+## Table of Contents
+* [Titu's Lemma](#titus-lemma)
+* [Cauchy-Schwarz Inequality](#cauchy-schwarz-inequality)
+* [Hölder's Inequality](#hölders-inequality)
+* [Wilson's Theorem](#wilsons-theorem)
+
 ### Titu's Lemma
 **Titu's lemma** (also known as T2 Lemma, Engel's form, or Sedrakyan's inequality) states that for positive reals $a_1, a_2, \dots, a_n$ and $b_1, b_2, \dots, b_n$, we have
 
