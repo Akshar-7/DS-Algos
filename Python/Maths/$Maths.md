@@ -31,3 +31,8 @@ $$
 $$
 
 which is the Cauchy-Schwarz inequality.
+
+### Wilson's Theorem
+**Wilson's theorem** states that a natural number $n > 1$ is a prime number if and only if the product of all the positive integers less than $n$ is one less than a multiple of $n$. That is (using the notations of modular arithmetic), the factorial $(n - 1)!$ satisfies
+
+$$(n - 1)! \equiv -1 \pmod n$$
