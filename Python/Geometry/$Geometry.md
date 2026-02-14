@@ -1,4 +1,8 @@
-# Pick's Theorem
+## Table of Contents
+* [Pick's Theorem](#picks-theorem)
+* [Point distance from a Line](#point-distance-from-a-line)
+
+### Pick's Theorem
 <div align="center">
 <img width="254" height="230" alt="image" src="https://github.com/user-attachments/assets/a45335a9-f748-4f18-8eb4-74db78432c59" />
 </div>
@@ -9,7 +13,7 @@ $$
 A = I + \frac{B}{2} - 1
 $$
 
-# Point distance from a line
+### Point distance from a Line
 <div align="center">
 <img width="373" height="200" alt="image" src="https://github.com/user-attachments/assets/5b5fee4c-5bd9-425c-ac4e-7be330831671" />
 </div>
