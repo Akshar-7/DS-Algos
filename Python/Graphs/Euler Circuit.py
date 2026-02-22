@@ -8,5 +8,5 @@ def euler(x):
       g[v].discard((u,j))
       s.append(v)
     else:
-      ans.append(s.pop() +1)
+      ans.append(s.pop())
   return ans
