@@ -1,12 +1,14 @@
-def euler(x):
+def euler(x, k=-1):
   ans = []
-  s = [x]
+  s = [(x,k)]
   while s:
-    u = s[-1]
+    u,k = s[-1]
     if g[u]:
       v,j = g[u].pop()
       g[v].discard((u,j))
-      s.append(v)
+      s.append((v,j))
     else:
-      ans.append(s.pop())
-  return ans
+      u,k = s.pop()
+      ans.append(u)
+      #idx.append(k)
+  return ans[::-1]
