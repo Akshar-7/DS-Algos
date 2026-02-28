@@ -1,14 +1,19 @@
-def euler(x, k=-1):
+# Uncomment lines for undirected graph
+# Use list of lists to store edges not sets
+
+def euler(x):
   ans = []
-  s = [(x,k)]
+  #vis = [False]*m
+  s = [(x, 0)]
   while s:
     u,k = s[-1]
+    #while g[u] and vis[g[u][-1][1]]: g[u].pop()
     if g[u]:
-      v,j = g[u].pop()
-      g[v].discard((u,j))
-      s.append((v,j))
+      vj = g[u].pop()
+      #vis[vj[1]] = True
+      s.append(vj)
     else:
-      u,k = s.pop()
-      ans.append(u)
+      y,k = s.pop()
+      ans.append(y)
       #idx.append(k)
-  return ans[::-1]
+  return ans
