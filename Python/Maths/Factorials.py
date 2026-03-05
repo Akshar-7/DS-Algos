@@ -17,4 +17,5 @@ for i in range(N-2, 1, -1):
 	fr[i] = fr[i+1]*(i+1) %mod
 
 def comb(n, r):
+	if n<0 or n<r: return 0
 	return f[n] *fr[r] *fr[n-r] %mod
