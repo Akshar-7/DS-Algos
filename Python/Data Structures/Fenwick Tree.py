@@ -6,7 +6,7 @@ def query(i):
   return res
 
 def update(i,x):
-  while i<=n:
+  while i<len(t):
     t[i] += x
     i += (i&-i)
 
